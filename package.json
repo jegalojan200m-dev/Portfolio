@@ -1,0 +1,26 @@
+{
+  "name": "neon-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "php": "php -S localhost:8000 -t php",
+    "start": "concurrently \"npm run dev\" \"npm run php\""
+  },
+  "dependencies": {
+    "three": "^0.160.0",
+    "gsap": "^3.12.5",
+    "@studio-freight/lenis": "^1.0.42"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "@vitejs/plugin-legacy": "^5.4.0",
+    "tailwindcss": "^3.4.15",
+    "postcss": "^8.4.49",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2"
+  }
+}

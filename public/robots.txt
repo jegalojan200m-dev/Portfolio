@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /php/
+Disallow: /vendor/
+Disallow: /messages/
+Disallow: /uploads/
+Disallow: /.env
+Disallow: /composer.json
+Disallow: /composer.lock
+Sitemap: https://example.com/sitemap.xml

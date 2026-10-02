@@ -1,0 +1,16 @@
+node_modules
+dist
+.phpunit.result.cache
+vendor
+.env
+.env.backup
+composer.lock
+*.log
+messages/
+uploads/
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

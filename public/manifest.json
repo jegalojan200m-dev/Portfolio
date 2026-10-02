@@ -1,0 +1,23 @@
+{
+  "name": "Neon Portfolio",
+  "short_name": "NeonPortfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#00f3ff",
+  "description": "Futuristic neon portfolio",
+  "icons": [
+    {
+      "src": "/favicon-64.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
