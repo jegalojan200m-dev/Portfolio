@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from '@studio-freight/lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,9 +17,9 @@ class Portfolio {
     this.targetMouse = { x: 0, y: 0 };
     this.init();
     this.initThreeJS();
-    this.initLenis();
     this.initCursor();
-    this.initNav();
+    this.initScrollEffects();
+    this.initAmbientAnimations();
     this.initScrollAnimations();
     this.initForms();
     this.initMobileMenu();
@@ -29,9 +28,7 @@ class Portfolio {
     this.initSkillCards();
     this.initProjectCards();
     this.initCarousels();
-    this.initBackToTop();
     this.initTypingAnimation();
-    this.updateScrollProgress();
     this.initActiveNavSpy();
     this.initCookieConsent();
     this.initSoundToggle();
@@ -67,7 +64,7 @@ class Portfolio {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 1500;
@@ -122,7 +119,7 @@ class Portfolio {
       const mat = new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? COLORS.blue : COLORS.purple, wireframe: true, transparent: true, opacity: 0.3 });
       const cube = new THREE.Mesh(geo, mat);
       cube.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 5);
-      cube.userData = { speed: Math.random() * 0.5 + 0.2, offset: Math.random() * Math.PI * 2 };
+      cube.userData = { speed: Math.random() * 0.5 + 0.2, offset: Math.random() * Math.PI * 2, baseY: cube.position.y };
       cubesGroup.add(cube);
     }
     scene.add(cubesGroup);
@@ -132,52 +129,55 @@ class Portfolio {
     window.addEventListener('mousemove', (event) => {
       this.targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       this.targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
+    }, { passive: true });
 
     const clock = new THREE.Clock();
-    const animate = () => {
-      const elapsedTime = clock.getElapsedTime();
-      particlesMesh.rotation.y = elapsedTime * 0.05;
-      starsMesh.rotation.y = elapsedTime * 0.02;
-      sphere.rotation.x = elapsedTime * 0.1;
-      sphere.rotation.y = elapsedTime * 0.15;
-      cubesGroup.children.forEach((cube) => {
-        cube.rotation.x += cube.userData.speed * 0.01;
-        cube.rotation.y += cube.userData.speed * 0.015;
-        cube.position.y += Math.sin(elapsedTime * cube.userData.speed + cube.userData.offset) * 0.003;
-      });
-      this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.05;
-      this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.05;
-      particlesMesh.rotation.y += this.mouse.x * 0.02;
-      starsMesh.rotation.x += this.mouse.y * 0.01;
-      renderer.render(scene, camera);
-      requestAnimationFrame(animate);
+    let animationFrame = 0;
+    let lastFrameTime = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const animate = (time) => {
+      if (document.hidden) return;
+      if (time - lastFrameTime >= 1000 / 30) {
+        lastFrameTime = time;
+        const elapsedTime = clock.getElapsedTime();
+        particlesMesh.rotation.y = elapsedTime * 0.05;
+        starsMesh.rotation.y = elapsedTime * 0.02;
+        sphere.rotation.x = elapsedTime * 0.1;
+        sphere.rotation.y = elapsedTime * 0.15;
+        cubesGroup.children.forEach((cube) => {
+          cube.rotation.x = elapsedTime * cube.userData.speed * 0.6;
+          cube.rotation.y = elapsedTime * cube.userData.speed * 0.9;
+          cube.position.y = cube.userData.baseY + Math.sin(elapsedTime * cube.userData.speed + cube.userData.offset) * 0.18;
+        });
+        this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.05;
+        this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.05;
+        particlesMesh.rotation.y += this.mouse.x * 0.02;
+        starsMesh.rotation.x += this.mouse.y * 0.01;
+        renderer.render(scene, camera);
+      }
+      animationFrame = requestAnimationFrame(animate);
     };
-    animate();
+
+    const syncAnimation = () => {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      if (document.hidden) return;
+      if (reducedMotion.matches) {
+        renderer.render(scene, camera);
+        return;
+      }
+      lastFrameTime = 0;
+      animationFrame = requestAnimationFrame(animate);
+    };
+    document.addEventListener('visibilitychange', syncAnimation);
+    reducedMotion.addEventListener('change', syncAnimation);
+    syncAnimation();
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
-  }
-
-  initLenis() {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
   }
 
   initCursor() {
@@ -208,28 +208,58 @@ class Portfolio {
     });
   }
 
-  initNav() {
+  initScrollEffects() {
     const navbar = document.getElementById('navbar');
-    if (!navbar) return;
+    const progress = document.getElementById('scroll-progress');
+    const backToTop = document.getElementById('back-to-top');
+    let framePending = false;
 
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      if (currentScroll > 100) {
-        navbar.classList.add('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/10');
-      } else {
-        navbar.classList.remove('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/10');
-      }
-    });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
+    const update = () => {
+      if (framePending) return;
+      framePending = true;
+      requestAnimationFrame(() => {
+        framePending = false;
+        const scrollTop = window.scrollY;
+        if (navbar) {
+          const isScrolled = scrollTop > 100;
+          navbar.classList.toggle('bg-black/80', isScrolled);
+          navbar.classList.toggle('backdrop-blur-xl', isScrolled);
+          navbar.classList.toggle('border-b', isScrolled);
+          navbar.classList.toggle('border-white/10', isScrolled);
+        }
+        if (progress) {
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          progress.style.transform = `scaleX(${scrollHeight > 0 ? scrollTop / scrollHeight : 0})`;
+        }
+        if (backToTop) {
+          const isVisible = scrollTop > 500;
+          backToTop.classList.toggle('opacity-0', !isVisible);
+          backToTop.classList.toggle('pointer-events-none', !isVisible);
         }
       });
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    backToTop?.addEventListener('click', () => {
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      window.scrollTo({ top: 0, behavior });
     });
+  }
+
+  initAmbientAnimations() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+    const animatedElements = hero.querySelectorAll('.animate-gradient-x, .animate-ping, .animate-pulse, .animate-bounce');
+    if (!animatedElements.length) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      const playState = entry.isIntersecting ? 'running' : 'paused';
+      animatedElements.forEach(element => {
+        element.style.animationPlayState = playState;
+      });
+    });
+    observer.observe(hero);
   }
 
   initActiveNavSpy() {
@@ -254,6 +284,14 @@ class Portfolio {
   }
 
   initScrollAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set('section, .skill-card, .project-card, .cert-card, .timeline-item, #avatar-placeholder', {
+        opacity: 1,
+        clearProps: 'transform',
+      });
+      return;
+    }
+
     gsap.utils.toArray('section').forEach((section, i) => {
       if (i === 0) return;
       gsap.fromTo(section, { opacity: 0, y: 80 }, {
@@ -583,25 +621,14 @@ class Portfolio {
     });
   }
 
-  initBackToTop() {
-    const btn = document.getElementById('back-to-top');
-    if (!btn) return;
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 500) {
-        btn.classList.remove('opacity-0', 'pointer-events-none');
-      } else {
-        btn.classList.add('opacity-0', 'pointer-events-none');
-      }
-    });
-    btn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
   initTypingAnimation() {
     const el = document.getElementById('typing-text');
     if (!el) return;
     const phrases = ['Full Stack Developer', 'Cloud Architect', 'Cybersecurity Expert', 'DevOps Engineer'];
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = phrases[0];
+      return;
+    }
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -652,17 +679,6 @@ class Portfolio {
     });
   }
 
-  updateScrollProgress() {
-    const progress = document.getElementById('scroll-progress');
-    if (!progress) return;
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrollPercent = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-      progress.style.transform = `scaleX(${scrollPercent})`;
-      progress.style.transformOrigin = 'left';
-    });
-  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

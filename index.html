@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
-<meta charset="UTF-8" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#0a0a0f" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Neon Portfolio</title>
-<meta name="description" content="Futuristic neon portfolio of a creative developer specializing in modern web technologies, cyberpunk UI, and immersive digital experiences." />
-<link rel="canonical" href="https://example.com/" />
-<meta property="og:title" content="Neon Portfolio | Cyberpunk Developer" />
-<meta property="og:description" content="Futuristic neon portfolio with award-winning animations and immersive interactions." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://example.com/" />
-<meta property="og:image" content="https://example.com/og-image.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Neon Portfolio | Cyberpunk Developer" />
-<meta name="twitter:description" content="Futuristic neon portfolio with award-winning animations." />
-<script type="application/ld+json">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Portfolio</title>
+  <meta name="description"
+    content="Futuristic neon portfolio of a creative developer specializing in modern web technologies, cyberpunk UI, and immersive digital experiences." />
+  <link rel="canonical" href="https://example.com/" />
+  <meta property="og:title" content="Neon Portfolio | Cyberpunk Developer" />
+  <meta property="og:description"
+    content="Futuristic neon portfolio with award-winning animations and immersive interactions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com/" />
+  <meta property="og:image" content="https://example.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Neon Portfolio | Cyberpunk Developer" />
+  <meta name="twitter:description" content="Futuristic neon portfolio with award-winning animations." />
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -39,392 +42,944 @@
   }
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<script type="module" src="/src/main.js"></script>
-<link rel="stylesheet" href="/src/style.css">
-<style>
-  body { background: #050508; color: #e5e5e5; }
-  .font-display { font-family: 'Orbitron', sans-serif; }
-  .font-mono { font-family: 'JetBrains Mono', monospace; }
-  #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-  section { position: relative; z-index: 10; }
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="module" src="/src/main.js"></script>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    body {
+      background: #050508;
+      color: #e5e5e5;
+    }
+
+    .font-display {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    section {
+      position: relative;
+      z-index: 10;
+    }
+  </style>
 </head>
+
 <body class="antialiased overflow-x-hidden">
-<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:px-4 focus:py-2 focus:bg-neon-blue focus:text-black focus:rounded-lg">Skip to main content</a>
-<div id="loading-screen" class="fixed inset-0 z-[10000] bg-neon-darker flex items-center justify-center transition-opacity duration-700"><div class="w-16 h-16 border-4 border-neon-blue/20 border-t-neon-blue rounded-full animate-spin"></div></div>
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
-<div id="cursor" class="hidden md:block fixed top-0 left-0 w-8 h-8 border-2 border-neon-blue rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ease-out"></div>
-<div id="cursor-dot" class="hidden md:block fixed top-0 left-0 w-2 h-2 bg-neon-purple rounded-full pointer-events-none z-[9999]"></div>
-<div id="scroll-progress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta z-[9998] origin-left scale-x-0"></div>
-
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="#" class="font-display text-2xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent tracking-wider">DEV.PORTFOLIO</a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#about" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">About</a>
-      <a href="#skills" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Skills</a>
-      <a href="#experience" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Experience</a>
-      <a href="#projects" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Projects</a>
-      <a href="#certifications" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Certifications</a>
-      <a href="#contact" class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Contact</a>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="sound-toggle" aria-label="Toggle sound" class="w-10 h-10 rounded-full border border-neon-blue/30 flex items-center justify-center hover:border-neon-blue hover:text-neon-blue transition-all duration-300 text-gray-400"><i class="fas fa-volume-mute text-sm"></i></button>
-      <button id="theme-toggle" aria-label="Toggle theme" class="w-10 h-10 rounded-full border border-neon-blue/30 flex items-center justify-center hover:border-neon-blue hover:text-neon-blue transition-all duration-300"><i class="fas fa-moon"></i></button>
-      <button id="menu-toggle" aria-label="Toggle menu" class="md:hidden w-10 h-10 flex items-center justify-center text-neon-blue"><i class="fas fa-bars text-xl"></i></button>
-    </div>
+  <a href="#main-content"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:px-4 focus:py-2 focus:bg-neon-blue focus:text-black focus:rounded-lg">Skip
+    to main content</a>
+  <div id="loading-screen"
+    class="fixed inset-0 z-[10000] bg-neon-darker flex items-center justify-center transition-opacity duration-700">
+    <div class="w-16 h-16 border-4 border-neon-blue/20 border-t-neon-blue rounded-full animate-spin"></div>
   </div>
-  <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-xl border-t border-neon-blue/10">
-    <div class="px-6 py-4 flex flex-col gap-4">
-      <a href="#about" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">About</a>
-      <a href="#skills" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Skills</a>
-      <a href="#experience" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Experience</a>
-      <a href="#projects" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Projects</a>
-      <a href="#certifications" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Certifications</a>
-      <a href="#contact" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Contact</a>
-    </div>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div id="cursor"
+    class="hidden md:block fixed top-0 left-0 w-8 h-8 border-2 border-neon-blue rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ease-out">
   </div>
-</nav>
+  <div id="cursor-dot"
+    class="hidden md:block fixed top-0 left-0 w-2 h-2 bg-neon-purple rounded-full pointer-events-none z-[9999]"></div>
+  <div id="scroll-progress"
+    class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta z-[9998] origin-left scale-x-0">
+  </div>
 
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-b from-neon-darker via-black to-neon-darker z-0"></div>
-  <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    <div class="text-center md:text-left">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-blue/30 bg-neon-blue/5 text-neon-blue text-xs font-mono mb-6">
-        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-blue opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-neon-blue"></span></span>
-        AVAILABLE FOR HIRE
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#"
+        class="font-display text-2xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent tracking-wider">DEV.PORTFOLIO</a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">About</a>
+        <a href="#skills"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Skills</a>
+        <a href="#experience"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Experience</a>
+        <a href="#projects"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Projects</a>
+        <a href="#certifications"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Certifications</a>
+        <a href="#contact"
+          class="nav-link text-sm text-gray-300 hover:text-neon-blue transition-colors duration-300">Contact</a>
       </div>
-      <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
-        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-neon-cyan to-neon-purple animate-gradient-x">FUTURE</span>
-        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-neon-purple via-neon-magenta to-neon-blue animate-gradient-x">DEVELOPER</span>
-      </h1>
-      <p class="text-gray-400 text-lg md:text-xl max-w-lg mx-auto md:mx-0 mb-4 font-light leading-relaxed">Crafting immersive digital experiences with code, creativity, and cutting-edge technology.</p>
-      <p class="text-neon-blue text-xl md:text-2xl font-mono mb-8 h-8"><span id="typing-text" class="typing-cursor"></span></p>
-      <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-        <a href="#contact" class="magnetic-btn group relative px-8 py-4 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider overflow-hidden transition-transform duration-300 hover:scale-105"><span class="relative z-10">HIRE ME</span><div class="absolute inset-0 bg-gradient-to-r from-neon-purple to-neon-magenta opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div></a>
-        <a href="#projects" class="magnetic-btn px-8 py-4 rounded-full border border-neon-blue/50 text-neon-blue font-bold text-sm tracking-wider hover:bg-neon-blue/10 transition-all duration-300 hover:scale-105">VIEW PROJECTS</a>
-        <a href="#" class="magnetic-btn px-8 py-4 rounded-full border border-neon-purple/50 text-neon-purple font-bold text-sm tracking-wider hover:bg-neon-purple/10 transition-all duration-300 hover:scale-105">DOWNLOAD CV</a>
+      <div class="flex items-center gap-2">
+        <button id="sound-toggle" aria-label="Toggle sound"
+          class="w-10 h-10 rounded-full border border-neon-blue/30 flex items-center justify-center hover:border-neon-blue hover:text-neon-blue transition-all duration-300 text-gray-400"><i
+            class="fas fa-volume-mute text-sm"></i></button>
+        <button id="theme-toggle" aria-label="Toggle theme"
+          class="w-10 h-10 rounded-full border border-neon-blue/30 flex items-center justify-center hover:border-neon-blue hover:text-neon-blue transition-all duration-300"><i
+            class="fas fa-moon"></i></button>
+        <button id="menu-toggle" aria-label="Toggle menu"
+          class="md:hidden w-10 h-10 flex items-center justify-center text-neon-blue"><i
+            class="fas fa-bars text-xl"></i></button>
       </div>
     </div>
-    <div class="relative flex items-center justify-center">
-      <div class="absolute w-[400px] h-[400px] rounded-full border border-neon-blue/20 animate-ping opacity-20"></div>
-      <div class="absolute w-[300px] h-[300px] rounded-full border border-neon-purple/30 animate-pulse"></div>
-      <div id="avatar-parallax" class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-neon-blue/50 shadow-[0_0_60px_rgba(0,243,255,0.3)]">
-        <div id="avatar-placeholder" class="w-full h-full bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 flex items-center justify-center"><i class="fas fa-user-astronaut text-6xl text-neon-blue/60"></i></div>
+    <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-xl border-t border-neon-blue/10">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#about" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">About</a>
+        <a href="#skills" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Skills</a>
+        <a href="#experience" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Experience</a>
+        <a href="#projects" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Projects</a>
+        <a href="#certifications"
+          class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Certifications</a>
+        <a href="#contact" class="nav-link text-gray-300 hover:text-neon-blue transition-colors">Contact</a>
       </div>
     </div>
-  </div>
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"><a href="#about" class="text-neon-blue/60 hover:text-neon-blue transition-colors"><i class="fas fa-chevron-down text-2xl"></i></a></div>
-</section>
+  </nav>
 
-<section id="about" class="relative py-32 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">ABOUT ME</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-blue to-neon-purple rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
-        <div class="flex items-center gap-4 mb-6">
-          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center text-3xl font-display font-bold text-black">JD</div>
-          <div>
-            <h3 class="font-display text-2xl font-bold">John Doe</h3>
-            <p class="text-neon-blue text-sm">Full Stack Developer</p>
-          </div>
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-neon-darker via-black to-neon-darker z-0"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div class="text-center md:text-left">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-blue/30 bg-neon-blue/5 text-neon-blue text-xs font-mono mb-6">
+          <span class="relative flex h-2 w-2"><span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-blue opacity-75"></span><span
+              class="relative inline-flex rounded-full h-2 w-2 bg-neon-blue"></span></span>
+          AVAILABLE FOR HIRE
         </div>
-        <p class="text-gray-300 leading-relaxed mb-6">I'm a passionate developer with expertise in building futuristic, high-performance web applications. With a strong foundation in cloud, cybersecurity, and DevOps, I create digital experiences that push the boundaries of what's possible on the web.</p>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-map-marker-alt text-neon-blue"></i><span class="text-sm">Tokyo, Japan</span></div>
-          <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-envelope text-neon-purple"></i><span class="text-sm">john@example.com</span></div>
-          <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-phone text-neon-magenta"></i><span class="text-sm">+81 90-1234-5678</span></div>
-          <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-globe text-neon-cyan"></i><span class="text-sm">Available Worldwide</span></div>
-        </div>
-      </div></div>
-      <div class="space-y-6">
-        <div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-purple to-neon-magenta rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
-          <h3 class="font-display text-2xl font-bold mb-4">My Mission</h3>
-          <p class="text-gray-300 leading-relaxed">To bridge the gap between human creativity and technological innovation. I believe in building software that not only solves problems but inspires people and creates meaningful impact in the digital world.</p>
-        </div></div>
-        <div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-cyan to-neon-blue rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
-          <h3 class="font-display text-2xl font-bold mb-4">What Drives Me</h3>
-          <p class="text-gray-300 leading-relaxed">Continuous learning, open source contribution, and creating beautiful, accessible, performant user experiences. Every line of code should be written with purpose and passion.</p>
-        </div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="skills" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">TECHNICAL ARSENAL</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i class="fab fa-aws"></i></div><h4 class="font-display font-bold text-sm mb-2">AWS</h4><p class="text-xs text-gray-400">Infrastructure</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i class="fab fa-docker"></i></div><h4 class="font-display font-bold text-sm mb-2">Docker</h4><p class="text-xs text-gray-400">Containers</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i class="fab fa-python"></i></div><h4 class="font-display font-bold text-sm mb-2">Python</h4><p class="text-xs text-gray-400">Automation</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i class="fab fa-js-square"></i></div><h4 class="font-display font-bold text-sm mb-2">JavaScript</h4><p class="text-xs text-gray-400">Full Stack</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i class="fab fa-php"></i></div><h4 class="font-display font-bold text-sm mb-2">PHP</h4><p class="text-xs text-gray-400">Backend</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i class="fab fa-linux"></i></div><h4 class="font-display font-bold text-sm mb-2">Linux</h4><p class="text-xs text-gray-400">Systems</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i class="fab fa-kubernetes"></i></div><h4 class="font-display font-bold text-sm mb-2">Kubernetes</h4><p class="text-xs text-gray-400">Orchestration</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i class="fab fa-react"></i></div><h4 class="font-display font-bold text-sm mb-2">React</h4><p class="text-xs text-gray-400">Frontend</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i class="fas fa-network-wired"></i></div><h4 class="font-display font-bold text-sm mb-2">Cisco</h4><p class="text-xs text-gray-400">Networking</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i class="fab fa-git-alt"></i></div><h4 class="font-display font-bold text-sm mb-2">Git</h4><p class="text-xs text-gray-400">Version Control</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i class="fas fa-shield-alt"></i></div><h4 class="font-display font-bold text-sm mb-2">Cybersecurity</h4><p class="text-xs text-gray-400">Security</p></div>
-      <div class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500"><div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i class="fas fa-cogs"></i></div><h4 class="font-display font-bold text-sm mb-2">DevOps</h4><p class="text-xs text-gray-400">CI/CD</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="experience" class="relative py-32">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">EXPERIENCE</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="relative max-w-3xl mx-auto">
-      <div class="absolute left-1/2 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-neon-blue via-neon-purple to-neon-magenta"></div>
-      <div class="space-y-12">
-        <div class="timeline-item relative flex items-center gap-8">
-          <div class="w-1/2 text-right"><div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-blue to-neon-cyan rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6"><h3 class="font-display text-xl font-bold">Senior DevOps Engineer</h3><p class="text-neon-blue text-sm">CyberCore Inc.</p><p class="text-xs text-gray-400 mt-2">2023 - Present</p><p class="text-sm text-gray-300 mt-2">Leading cloud infrastructure automation with Kubernetes, Terraform, and CI/CD pipelines across multi-cloud environments.</p></div></div></div>
-          <div class="relative z-10 w-4 h-4 rounded-full bg-neon-blue shadow-[0_0_15px_rgba(0,243,255,0.8)]"></div>
-          <div class="w-1/2"></div>
-        </div>
-        <div class="timeline-item relative flex items-center gap-8">
-          <div class="w-1/2"></div>
-          <div class="relative z-10 w-4 h-4 rounded-full bg-neon-purple shadow-[0_0_15px_rgba(188,19,254,0.8)]"></div>
-          <div class="w-1/2 text-left"><div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-purple to-neon-magenta rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6"><h3 class="font-display text-xl font-bold">Cloud Security Architect</h3><p class="text-neon-purple text-sm">NetSecure Solutions</p><p class="text-xs text-gray-400 mt-2">2021 - 2023</p><p class="text-sm text-gray-300 mt-2">Designed and implemented security architectures for AWS and Azure, reducing vulnerabilities by 80%.</p></div></div></div>
-        </div>
-        <div class="timeline-item relative flex items-center gap-8">
-          <div class="w-1/2 text-right"><div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-neon-cyan to-neon-blue rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div><div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6"><h3 class="font-display text-xl font-bold">Network Engineer</h3><p class="text-neon-cyan text-sm">GlobalTech Corp</p><p class="text-xs text-gray-400 mt-2">2019 - 2021</p><p class="text-sm text-gray-300 mt-2">Managed Cisco-based enterprise networks, implementing automation scripts in Python for monitoring and configuration.</p></div></div></div>
-          <div class="relative z-10 w-4 h-4 rounded-full bg-neon-magenta shadow-[0_0_15px_rgba(255,0,255,0.8)]"></div>
-          <div class="w-1/2"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="education" class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">EDUCATION</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center text-black text-2xl"><i class="fas fa-university"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">B.S. Computer Science</h4><i class="fas fa-certificate text-neon-blue text-sm"></i></div><p class="text-gray-400 text-xs mb-2">Tokyo Institute of Technology</p><span class="inline-block px-3 py-1 rounded-full bg-neon-blue/10 border border-neon-blue/20 text-neon-blue text-xs font-mono">2015 - 2019</span></div></div></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black text-2xl"><i class="fas fa-laptop-code"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">M.S. Cybersecurity</h4><i class="fas fa-certificate text-neon-purple text-sm"></i></div><p class="text-gray-400 text-xs mb-2">University of Tokyo</p><span class="inline-block px-3 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-xs font-mono">2019 - 2021</span></div></div></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black text-2xl"><i class="fas fa-cloud"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">Cloud Architecture</h4><i class="fas fa-certificate text-neon-cyan text-sm"></i></div><p class="text-gray-400 text-xs mb-2">AWS Training Center</p><span class="inline-block px-3 py-1 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-xs font-mono">2022</span></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="services" class="relative py-32">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">SERVICES</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i class="fas fa-cloud"></i></div><h3 class="font-display text-xl font-bold mb-2">Cloud Solutions</h3><p class="text-gray-400 text-sm">Scalable AWS and Azure infrastructure design with Terraform and Kubernetes orchestration.</p></div>
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i class="fas fa-shield-alt"></i></div><h3 class="font-display text-xl font-bold mb-2">Cybersecurity</h3><p class="text-gray-400 text-sm">Penetration testing, vulnerability assessments, and security architecture for enterprise environments.</p></div>
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i class="fas fa-code"></i></div><h3 class="font-display text-xl font-bold mb-2">Full Stack Dev</h3><p class="text-gray-400 text-sm">Modern web applications with React, Node.js, PHP, and cloud-native architectures.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="achievements" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">ACHIEVEMENTS</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-blue mb-2">50+</div><p class="text-gray-400 text-sm">Projects Delivered</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-purple mb-2">10+</div><p class="text-gray-400 text-sm">Certifications</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-cyan mb-2">5+</div><p class="text-gray-400 text-sm">Years Experience</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-magenta mb-2">1K+</div><p class="text-gray-400 text-sm">GitHub Stars</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="projects" class="relative py-32">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">FEATURED PROJECTS</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(0,243,255,0.15)]">
-        <div class="h-48 bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 relative overflow-hidden">
-          <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-cloud text-6xl text-neon-blue/30"></i></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
-          <div class="absolute top-4 right-4 flex gap-2">
-            <button class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-blue transition-colors" aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
-            <button class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-blue transition-colors" aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-blue transition-colors duration-300">Cloud Infrastructure</h3>
-          <p class="text-gray-400 text-sm mb-4 line-clamp-2">Multi-region AWS infrastructure with auto-scaling, monitoring, and disaster recovery using Terraform and Ansible.</p>
-          <div class="flex gap-3">
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-blue/30 text-neon-blue text-sm hover:bg-neon-blue/10 transition-colors duration-300">GitHub</a>
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-purple/30 text-neon-purple text-sm hover:bg-neon-purple/10 transition-colors duration-300">Live Demo</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(188,19,254,0.15)]">
-        <div class="h-48 bg-gradient-to-br from-neon-purple/20 to-neon-magenta/20 relative overflow-hidden">
-          <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-shield-virus text-6xl text-neon-purple/30"></i></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
-          <div class="absolute top-4 right-4 flex gap-2">
-            <button class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-purple transition-colors" aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
-            <button class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-purple transition-colors" aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors duration-300">Penetration Testing Suite</h3>
-          <p class="text-gray-400 text-sm mb-4 line-clamp-2">Automated vulnerability scanner and exploitation framework for ethical security assessments.</p>
-          <div class="flex gap-3">
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-purple/30 text-neon-purple text-sm hover:bg-neon-purple/10 transition-colors duration-300">GitHub</a>
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-magenta/30 text-neon-magenta text-sm hover:bg-neon-magenta/10 transition-colors duration-300">Live Demo</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(0,243,255,0.15)]">
-        <div class="h-48 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 relative overflow-hidden">
-          <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-network-wired text-6xl text-neon-cyan/30"></i></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
-          <div class="absolute top-4 right-4 flex gap-2">
-            <button class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-cyan transition-colors" aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
-            <button class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-cyan transition-colors" aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-cyan transition-colors duration-300">Network Automator</h3>
-          <p class="text-gray-400 text-sm mb-4 line-clamp-2">AI-driven network configuration and management tool with real-time monitoring dashboards.</p>
-          <div class="flex gap-3">
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-cyan/30 text-neon-cyan text-sm hover:bg-neon-cyan/10 transition-colors duration-300">GitHub</a>
-            <a href="#" class="flex-1 text-center py-2 rounded-lg border border-neon-blue/30 text-neon-blue text-sm hover:bg-neon-blue/10 transition-colors duration-300">Live Demo</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="certifications" class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">CERTIFICATIONS</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center text-black text-2xl"><i class="fab fa-aws"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">AWS Solutions Architect</h4><i class="fas fa-certificate text-neon-blue text-sm"></i></div><p class="text-gray-400 text-xs mb-2">Amazon Web Services</p><span class="inline-block px-3 py-1 rounded-full bg-neon-blue/10 border border-neon-blue/20 text-neon-blue text-xs font-mono">Issued 2024</span></div></div></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black text-2xl"><i class="fas fa-project-diagram"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">Cisco CCNP Enterprise</h4><i class="fas fa-certificate text-neon-purple text-sm"></i></div><p class="text-gray-400 text-xs mb-2">Cisco Networking Academy</p><span class="inline-block px-3 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-xs font-mono">Issued 2023</span></div></div></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500"><div class="flex items-start gap-4"><div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black text-2xl"><i class="fas fa-code"></i></div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h4 class="font-display font-bold">Full Stack Developer</h4><i class="fas fa-certificate text-neon-cyan text-sm"></i></div><p class="text-gray-400 text-xs mb-2">Meta Professional Certificate</p><span class="inline-block px-3 py-1 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-xs font-mono">Issued 2024</span></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="testimonials" class="relative py-32">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">TESTIMONIALS</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105"><div class="flex items-center gap-4 mb-4"><div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center text-black font-bold text-lg">A</div><div><h4 class="font-display font-bold">Alice Smith</h4><p class="text-neon-blue text-xs">CTO at TechCorp</p></div></div><p class="text-gray-300 text-sm leading-relaxed">"An exceptional engineer who delivers beyond expectations. The futuristic portfolio itself is a testament to his skills and attention to detail."</p></div>
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105"><div class="flex items-center gap-4 mb-4"><div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black font-bold text-lg">B</div><div><h4 class="font-display font-bold">Bob Johnson</h4><p class="text-neon-purple text-xs">Product Manager</p></div></div><p class="text-gray-300 text-sm leading-relaxed">"Working with John was a game changer. He transformed our legacy systems into scalable, modern cloud-native applications."</p></div>
-      <div class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105"><div class="flex items-center gap-4 mb-4"><div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black font-bold text-lg">C</div><div><h4 class="font-display font-bold">Carol White</h4><p class="text-neon-cyan text-xs">Security Analyst</p></div></div><p class="text-gray-300 text-sm leading-relaxed">"His cybersecurity expertise is unmatched. He identified critical vulnerabilities we had missed for months and fixed them instantly."</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="github-stats" class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">GITHUB STATS</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-blue mb-2">1.2K</div><p class="text-gray-400 text-sm">Repositories</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-purple mb-2">3.5K</div><p class="text-gray-400 text-sm">Stars</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-cyan mb-2">890</div><p class="text-gray-400 text-sm">Followers</p></div>
-      <div class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500 hover:scale-105 text-center"><div class="text-4xl font-display font-black text-neon-magenta mb-2">12</div><p class="text-gray-400 text-sm">Languages</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="blog" class="relative py-32">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">BLOG</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-blue mx-auto rounded-full"></div></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-[1.02]"><div class="h-48 bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 relative overflow-hidden"><div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-file-alt text-6xl text-neon-blue/30"></i></div><div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div></div><div class="p-6"><h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-blue transition-colors duration-300">Mastering Kubernetes</h3><p class="text-gray-400 text-sm mb-4">A deep dive into container orchestration and best practices for production deployments.</p><a href="#" class="text-neon-blue text-sm hover:underline">Read More</a></div></div>
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-[1.02]"><div class="h-48 bg-gradient-to-br from-neon-purple/20 to-neon-magenta/20 relative overflow-hidden"><div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-shield-alt text-6xl text-neon-purple/30"></i></div><div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div></div><div class="p-6"><h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors duration-300">Zero Trust Architecture</h3><p class="text-gray-400 text-sm mb-4">Implementing zero trust security models in modern cloud environments.</p><a href="#" class="text-neon-purple text-sm hover:underline">Read More</a></div></div>
-      <div class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-[1.02]"><div class="h-48 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 relative overflow-hidden"><div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-code text-6xl text-neon-cyan/30"></i></div><div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div></div><div class="p-6"><h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-cyan transition-colors duration-300">Modern PHP Patterns</h3><p class="text-gray-400 text-sm mb-4">Exploring modern PHP design patterns and best practices for 2025.</p><a href="#" class="text-neon-cyan text-sm hover:underline">Read More</a></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="resume" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
-  <div class="max-w-4xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">RESUME</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div></div>
-    <div class="relative group">
-      <div class="absolute -inset-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-      <div class="relative rounded-3xl bg-neon-card backdrop-blur-xl border border-white/10 p-8 md:p-12 text-center">
-        <div class="text-6xl mb-6 text-neon-blue"><i class="fas fa-file-pdf"></i></div>
-        <h3 class="font-display text-2xl font-bold mb-4">Download My Resume</h3>
-        <p class="text-gray-400 mb-8 max-w-lg mx-auto">Get a comprehensive overview of my experience, skills, and certifications in PDF format.</p>
-        <a href="#" class="magnetic-btn inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider hover:scale-105 transition-transform duration-300"><i class="fas fa-download"></i> DOWNLOAD CV</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="relative py-32">
-  <div class="max-w-4xl mx-auto px-6">
-    <div class="text-center mb-16"><h2 class="section-title mb-4">CONNECT</h2><div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-blue mx-auto rounded-full"></div></div>
-    <div class="relative group">
-      <div class="absolute -inset-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-      <div class="relative rounded-3xl bg-neon-card backdrop-blur-xl border border-white/10 p-8 md:p-12">
-        <form id="contact-form" class="space-y-6" enctype="multipart/form-data">
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label for="name" class="block text-sm font-medium text-gray-300">Full Name</label>
-              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300" placeholder="John Doe" />
-              <span class="text-xs text-red-400 hidden" id="name-error">Please enter your name.</span>
+        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
+          <span
+            class="block text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-neon-cyan to-neon-purple animate-gradient-x">FUTURE</span>
+          <span
+            class="block text-transparent bg-clip-text bg-gradient-to-r from-neon-purple via-neon-magenta to-neon-blue animate-gradient-x">DEVELOPER</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-lg mx-auto md:mx-0 mb-4 font-light leading-relaxed">Crafting
+          immersive digital experiences with code, creativity, and cutting-edge technology.</p>
+        <p class="text-neon-blue text-xl md:text-2xl font-mono mb-8 h-8"><span id="typing-text"
+            class="typing-cursor"></span></p>
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <a href="#contact"
+            class="magnetic-btn group relative px-8 py-4 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider overflow-hidden transition-transform duration-300 hover:scale-105"><span
+              class="relative z-10">HIRE ME</span>
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-neon-purple to-neon-magenta opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             </div>
-            <div class="space-y-2">
-              <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300" placeholder="john@example.com" />
-              <span class="text-xs text-red-400 hidden" id="email-error">Please enter a valid email.</span>
+          </a>
+          <a href="#projects"
+            class="magnetic-btn px-8 py-4 rounded-full border border-neon-blue/50 text-neon-blue font-bold text-sm tracking-wider hover:bg-neon-blue/10 transition-all duration-300 hover:scale-105">VIEW
+            PROJECTS</a>
+          <a href="#"
+            class="magnetic-btn px-8 py-4 rounded-full border border-neon-purple/50 text-neon-purple font-bold text-sm tracking-wider hover:bg-neon-purple/10 transition-all duration-300 hover:scale-105">DOWNLOAD
+            CV</a>
+        </div>
+      </div>
+      <div class="relative flex items-center justify-center">
+        <div class="absolute w-[400px] h-[400px] rounded-full border border-neon-blue/20 animate-ping opacity-20"></div>
+        <div class="absolute w-[300px] h-[300px] rounded-full border border-neon-purple/30 animate-pulse"></div>
+        <div id="avatar-parallax"
+          class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-neon-blue/50 shadow-[0_0_60px_rgba(0,243,255,0.3)]">
+          <div id="avatar-placeholder"
+            class="w-full h-full bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 flex items-center justify-center">
+            <i class="fas fa-user-astronaut text-6xl text-neon-blue/60"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"><a href="#about"
+        class="text-neon-blue/60 hover:text-neon-blue transition-colors"><i
+          class="fas fa-chevron-down text-2xl"></i></a></div>
+  </section>
+
+  <section id="about" class="relative py-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">ABOUT ME</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="relative group">
+          <div
+            class="absolute -inset-1 bg-gradient-to-r from-neon-blue to-neon-purple rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+          </div>
+          <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <div
+                class="w-16 h-16 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center text-3xl font-display font-bold text-black">
+                JD</div>
+              <div>
+                <h3 class="font-display text-2xl font-bold">John Doe</h3>
+                <p class="text-neon-blue text-sm">Full Stack Developer</p>
+              </div>
+            </div>
+            <p class="text-gray-300 leading-relaxed mb-6">I'm a passionate developer with expertise in building
+              futuristic, high-performance web applications. With a strong foundation in cloud, cybersecurity, and
+              DevOps, I create digital experiences that push the boundaries of what's possible on the web.</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="flex items-center gap-3 text-gray-300"><i
+                  class="fas fa-map-marker-alt text-neon-blue"></i><span class="text-sm">Batticaloa, Srilanka</span>
+              </div>
+              <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-envelope text-neon-purple"></i><span
+                  class="text-sm">Jegalojan@gmail.com</span></div>
+              <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-phone text-neon-magenta"></i><span
+                  class="text-sm">+94 773062941</span></div>
+              <div class="flex items-center gap-3 text-gray-300"><i class="fas fa-globe text-neon-cyan"></i><span
+                  class="text-sm">Available Worldwide</span></div>
             </div>
           </div>
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label for="phone" class="block text-sm font-medium text-gray-300">Phone</label>
-              <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300" placeholder="+1 (555) 000-0000" />
-              <span class="text-xs text-red-400 hidden" id="phone-error">Please enter a valid phone number.</span>
+        </div>
+        <div class="space-y-6">
+          <div class="relative group">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-neon-purple to-neon-magenta rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
             </div>
-            <div class="space-y-2">
-              <label for="subject" class="block text-sm font-medium text-gray-300">Subject</label>
-              <input type="text" id="subject" name="subject" required class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300" placeholder="Project Inquiry" />
-              <span class="text-xs text-red-400 hidden" id="subject-error">Please enter a subject.</span>
+            <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
+              <h3 class="font-display text-2xl font-bold mb-4">My Mission</h3>
+              <p class="text-gray-300 leading-relaxed">To bridge the gap between human creativity and technological
+                innovation. I believe in building software that not only solves problems but inspires people and creates
+                meaningful impact in the digital world.</p>
             </div>
           </div>
-          <div class="space-y-2">
-            <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
-            <textarea id="message" name="message" rows="6" required class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300" placeholder="Tell me about your project..."></textarea>
-            <span class="text-xs text-red-400 hidden" id="message-error">Please enter your message.</span>
+          <div class="relative group">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-neon-cyan to-neon-blue rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+            </div>
+            <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-8">
+              <h3 class="font-display text-2xl font-bold mb-4">What Drives Me</h3>
+              <p class="text-gray-300 leading-relaxed">Continuous learning, open source contribution, and creating
+                beautiful, accessible, performant user experiences. Every line of code should be written with purpose
+                and passion.</p>
+            </div>
           </div>
-          <div class="space-y-2">
-            <label for="file-upload" class="block text-sm font-medium text-gray-300">Attachment (optional)</label>
-            <input type="file" id="file-upload" name="attachment" class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-neon-blue/20 file:text-neon-blue hover:file:bg-neon-blue/30 transition-all" />
-          </div>
-          <button type="submit" class="magnetic-btn w-full py-4 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider hover:opacity-90 transition-opacity">SEND MESSAGE</button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="relative py-12 border-t border-white/10">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="font-display text-2xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent">DEV.PORTFOLIO</div>
-      <div class="flex gap-6">
-        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-neon-blue transition-colors"><i class="fab fa-github text-xl"></i></a>
-        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-neon-blue transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
-        <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-neon-blue transition-colors"><i class="fab fa-twitter text-xl"></i></a>
-        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-neon-blue transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-        <a href="#" aria-label="Email" class="text-gray-400 hover:text-neon-blue transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+  <section id="skills" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">TECHNICAL ARSENAL</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
       </div>
-      <p class="text-gray-500 text-sm">&copy; 2025 Neon Portfolio. All rights reserved.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-aws"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">AWS</h4>
+          <p class="text-xs text-gray-400">Infrastructure</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-docker"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Docker</h4>
+          <p class="text-xs text-gray-400">Containers</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-python"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Python</h4>
+          <p class="text-xs text-gray-400">Automation</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-js-square"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">JavaScript</h4>
+          <p class="text-xs text-gray-400">Full Stack</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-php"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">PHP</h4>
+          <p class="text-xs text-gray-400">Backend</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-linux"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Linux</h4>
+          <p class="text-xs text-gray-400">Systems</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-kubernetes"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Kubernetes</h4>
+          <p class="text-xs text-gray-400">Orchestration</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-react"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">React</h4>
+          <p class="text-xs text-gray-400">Frontend</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-network-wired"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Cisco</h4>
+          <p class="text-xs text-gray-400">Networking</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i
+              class="fab fa-git-alt"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Git</h4>
+          <p class="text-xs text-gray-400">Version Control</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-shield-alt"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">Networking</h4>
+          <p class="text-xs text-gray-400">Security</p>
+        </div>
+        <div
+          class="skill-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500">
+          <div class="text-4xl mb-4 text-neon-magenta group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-cogs"></i></div>
+          <h4 class="font-display font-bold text-sm mb-2">DevOps</h4>
+          <p class="text-xs text-gray-400">CI/CD</p>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section id="experience" class="relative py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">EXPERIENCE</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="relative max-w-3xl mx-auto">
+        <div
+          class="absolute left-1/2 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-neon-blue via-neon-purple to-neon-magenta">
+        </div>
+        <div class="space-y-12">
+          <div class="timeline-item relative flex items-center gap-8">
+            <div class="w-1/2 text-right">
+              <div class="relative group">
+                <div
+                  class="absolute -inset-1 bg-gradient-to-r from-neon-blue to-neon-cyan rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+                </div>
+                <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6">
+                  <h3 class="font-display text-xl font-bold">IT Assistant / Technical Support Assistant
+                  </h3>
+                  <p class="text-neon-blue text-sm">Eastern University, Sri Lanka (EUSL) Vantharumoolai, Chenkalady</p>
+                  <p class="text-xs text-gray-400 mt-2">2024.01 - 2024.7</p>
+                  <p class="text-sm text-gray-300 mt-2">* Provided first-level IT support and troubleshooting for staff.
+                    * Installed and maintained Windows OS, computers, printers, and IT equipment.
+                    * Troubleshot basic LAN, IP configuration, and connectivity issues.
+                    * Performed hardware maintenance, repairs, and replacements.
+                    * Managed office documentation and supported daily IT operations.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="relative z-10 w-4 h-4 rounded-full bg-neon-blue shadow-[0_0_15px_rgba(0,243,255,0.8)]"></div>
+            <div class="w-1/2"></div>
+          </div>
+          <div class="timeline-item relative flex items-center gap-8">
+            <div class="w-1/2"></div>
+            <div class="relative z-10 w-4 h-4 rounded-full bg-neon-purple shadow-[0_0_15px_rgba(188,19,254,0.8)]"></div>
+            <div class="w-1/2 text-left">
+              <div class="relative group">
+                <div
+                  class="absolute -inset-1 bg-gradient-to-r from-neon-purple to-neon-magenta rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+                </div>
+                <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6">
+                  <h3 class="font-display text-xl font-bold">Cloud Security Architect</h3>
+                  <p class="text-neon-purple text-sm">NetSecure Solutions</p>
+                  <p class="text-xs text-gray-400 mt-2">2021 - 2023</p>
+                  <p class="text-sm text-gray-300 mt-2">Designed and implemented security architectures for AWS and
+                    Azure, reducing vulnerabilities by 80%.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item relative flex items-center gap-8">
+            <div class="w-1/2 text-right">
+              <div class="relative group">
+                <div
+                  class="absolute -inset-1 bg-gradient-to-r from-neon-cyan to-neon-blue rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+                </div>
+                <div class="relative rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 p-6">
+                  <h3 class="font-display text-xl font-bold">Network Engineer</h3>
+                  <p class="text-neon-cyan text-sm">GlobalTech Corp</p>
+                  <p class="text-xs text-gray-400 mt-2">2019 - 2021</p>
+                  <p class="text-sm text-gray-300 mt-2">Managed Cisco-based enterprise networks, implementing automation
+                    scripts in Python for monitoring and configuration.</p>
+                </div>
+              </div>
+            </div>
+            <div class="relative z-10 w-4 h-4 rounded-full bg-neon-magenta shadow-[0_0_15px_rgba(255,0,255,0.8)]"></div>
+            <div class="w-1/2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">EDUCATION</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center text-black text-2xl">
+              <i class="fas fa-university"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">B.S. Computer Science</h4><i
+                  class="fas fa-certificate text-neon-blue text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">Tokyo Institute of Technology</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-blue/10 border border-neon-blue/20 text-neon-blue text-xs font-mono">2015
+                - 2019</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black text-2xl">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">M.S. Cybersecurity</h4><i
+                  class="fas fa-certificate text-neon-purple text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">University of Tokyo</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-xs font-mono">2019
+                - 2021</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black text-2xl">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">Cloud Architecture</h4><i
+                  class="fas fa-certificate text-neon-cyan text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">AWS Training Center</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-xs font-mono">2022</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="relative py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">SERVICES</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl mb-4 text-neon-blue group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-cloud"></i></div>
+          <h3 class="font-display text-xl font-bold mb-2">Cloud Solutions</h3>
+          <p class="text-gray-400 text-sm">Scalable AWS and Azure infrastructure design with Terraform and Kubernetes
+            orchestration.</p>
+        </div>
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl mb-4 text-neon-purple group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-shield-alt"></i></div>
+          <h3 class="font-display text-xl font-bold mb-2">Cybersecurity</h3>
+          <p class="text-gray-400 text-sm">Penetration testing, vulnerability assessments, and security architecture for
+            enterprise environments.</p>
+        </div>
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl mb-4 text-neon-cyan group-hover:scale-110 transition-transform duration-300"><i
+              class="fas fa-code"></i></div>
+          <h3 class="font-display text-xl font-bold mb-2">Full Stack Dev</h3>
+          <p class="text-gray-400 text-sm">Modern web applications with React, Node.js, PHP, and cloud-native
+            architectures.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">ACHIEVEMENTS</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-blue mb-2">50+</div>
+          <p class="text-gray-400 text-sm">Projects Delivered</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-purple mb-2">10+</div>
+          <p class="text-gray-400 text-sm">Certifications</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-cyan mb-2">5+</div>
+          <p class="text-gray-400 text-sm">Years Experience</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-magenta mb-2">1K+</div>
+          <p class="text-gray-400 text-sm">GitHub Stars</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="relative py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">FEATURED PROJECTS</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(0,243,255,0.15)]">
+          <div class="h-48 bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-cloud text-6xl text-neon-blue/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <button
+                class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-blue transition-colors"
+                aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
+              <button
+                class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-blue transition-colors"
+                aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-blue transition-colors duration-300">
+              Cloud Infrastructure</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Multi-region AWS infrastructure with auto-scaling,
+              monitoring, and disaster recovery using Terraform and Ansible.</p>
+            <div class="flex gap-3">
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-blue/30 text-neon-blue text-sm hover:bg-neon-blue/10 transition-colors duration-300">GitHub</a>
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-purple/30 text-neon-purple text-sm hover:bg-neon-purple/10 transition-colors duration-300">Live
+                Demo</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(188,19,254,0.15)]">
+          <div class="h-48 bg-gradient-to-br from-neon-purple/20 to-neon-magenta/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-shield-virus text-6xl text-neon-purple/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <button
+                class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-purple transition-colors"
+                aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
+              <button
+                class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-purple transition-colors"
+                aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors duration-300">
+              Penetration Testing Suite</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Automated vulnerability scanner and exploitation
+              framework for ethical security assessments.</p>
+            <div class="flex gap-3">
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-purple/30 text-neon-purple text-sm hover:bg-neon-purple/10 transition-colors duration-300">GitHub</a>
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-magenta/30 text-neon-magenta text-sm hover:bg-neon-magenta/10 transition-colors duration-300">Live
+                Demo</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(0,243,255,0.15)]">
+          <div class="h-48 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-network-wired text-6xl text-neon-cyan/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <button
+                class="carousel-prev w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-cyan transition-colors"
+                aria-label="Previous image"><i class="fas fa-chevron-left text-xs"></i></button>
+              <button
+                class="carousel-next w-8 h-8 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:border-neon-cyan transition-colors"
+                aria-label="Next image"><i class="fas fa-chevron-right text-xs"></i></button>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-cyan transition-colors duration-300">
+              Network Automator</h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">AI-driven network configuration and management tool with
+              real-time monitoring dashboards.</p>
+            <div class="flex gap-3">
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-cyan/30 text-neon-cyan text-sm hover:bg-neon-cyan/10 transition-colors duration-300">GitHub</a>
+              <a href="#"
+                class="flex-1 text-center py-2 rounded-lg border border-neon-blue/30 text-neon-blue text-sm hover:bg-neon-blue/10 transition-colors duration-300">Live
+                Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications"
+    class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">CERTIFICATIONS</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center text-black text-2xl">
+              <i class="fab fa-aws"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">AWS Solutions Architect</h4><i
+                  class="fas fa-certificate text-neon-blue text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">Amazon Web Services</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-blue/10 border border-neon-blue/20 text-neon-blue text-xs font-mono">Issued
+                2024</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black text-2xl">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">Cisco CCNP Enterprise</h4><i
+                  class="fas fa-certificate text-neon-purple text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">Cisco Networking Academy</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-xs font-mono">Issued
+                2023</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black text-2xl">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-display font-bold">Full Stack Developer</h4><i
+                  class="fas fa-certificate text-neon-cyan text-sm"></i>
+              </div>
+              <p class="text-gray-400 text-xs mb-2">Meta Professional Certificate</p><span
+                class="inline-block px-3 py-1 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-xs font-mono">Issued
+                2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="relative py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">TESTIMONIALS</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105">
+          <div class="flex items-center gap-4 mb-4">
+            <div
+              class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center text-black font-bold text-lg">
+              A</div>
+            <div>
+              <h4 class="font-display font-bold">Alice Smith</h4>
+              <p class="text-neon-blue text-xs">CTO at TechCorp</p>
+            </div>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed">"An exceptional engineer who delivers beyond expectations.
+            The futuristic portfolio itself is a testament to his skills and attention to detail."</p>
+        </div>
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105">
+          <div class="flex items-center gap-4 mb-4">
+            <div
+              class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-magenta flex items-center justify-center text-black font-bold text-lg">
+              B</div>
+            <div>
+              <h4 class="font-display font-bold">Bob Johnson</h4>
+              <p class="text-neon-purple text-xs">Product Manager</p>
+            </div>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed">"Working with John was a game changer. He transformed our
+            legacy systems into scalable, modern cloud-native applications."</p>
+        </div>
+        <div
+          class="cert-card group relative p-8 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105">
+          <div class="flex items-center gap-4 mb-4">
+            <div
+              class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-black font-bold text-lg">
+              C</div>
+            <div>
+              <h4 class="font-display font-bold">Carol White</h4>
+              <p class="text-neon-cyan text-xs">Security Analyst</p>
+            </div>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed">"His cybersecurity expertise is unmatched. He identified
+            critical vulnerabilities we had missed for months and fixed them instantly."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="github-stats" class="relative py-32 bg-gradient-to-b from-transparent via-neon-purple/5 to-transparent">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">GITHUB STATS</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-magenta mx-auto rounded-full"></div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-blue mb-2">1.2K</div>
+          <p class="text-gray-400 text-sm">Repositories</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-purple mb-2">3.5K</div>
+          <p class="text-gray-400 text-sm">Stars</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-cyan mb-2">890</div>
+          <p class="text-gray-400 text-sm">Followers</p>
+        </div>
+        <div
+          class="cert-card group relative p-6 rounded-2xl bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-magenta/50 transition-all duration-500 hover:scale-105 text-center">
+          <div class="text-4xl font-display font-black text-neon-magenta mb-2">12</div>
+          <p class="text-gray-400 text-sm">Languages</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="relative py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">BLOG</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-blue mx-auto rounded-full"></div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-blue/50 transition-all duration-500 hover:scale-[1.02]">
+          <div class="h-48 bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-file-alt text-6xl text-neon-blue/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-blue transition-colors duration-300">
+              Mastering Kubernetes</h3>
+            <p class="text-gray-400 text-sm mb-4">A deep dive into container orchestration and best practices for
+              production deployments.</p><a href="#" class="text-neon-blue text-sm hover:underline">Read More</a>
+          </div>
+        </div>
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:scale-[1.02]">
+          <div class="h-48 bg-gradient-to-br from-neon-purple/20 to-neon-magenta/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-shield-alt text-6xl text-neon-purple/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors duration-300">
+              Zero Trust Architecture</h3>
+            <p class="text-gray-400 text-sm mb-4">Implementing zero trust security models in modern cloud environments.
+            </p><a href="#" class="text-neon-purple text-sm hover:underline">Read More</a>
+          </div>
+        </div>
+        <div
+          class="project-card group relative rounded-2xl overflow-hidden bg-neon-card backdrop-blur-xl border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:scale-[1.02]">
+          <div class="h-48 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center"><i
+                class="fas fa-code text-6xl text-neon-cyan/30"></i></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neon-card to-transparent"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-neon-cyan transition-colors duration-300">
+              Modern PHP Patterns</h3>
+            <p class="text-gray-400 text-sm mb-4">Exploring modern PHP design patterns and best practices for 2025.</p>
+            <a href="#" class="text-neon-cyan text-sm hover:underline">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume" class="relative py-32 bg-gradient-to-b from-transparent via-neon-blue/5 to-transparent">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">RESUME</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
+      </div>
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+        </div>
+        <div class="relative rounded-3xl bg-neon-card backdrop-blur-xl border border-white/10 p-8 md:p-12 text-center">
+          <div class="text-6xl mb-6 text-neon-blue"><i class="fas fa-file-pdf"></i></div>
+          <h3 class="font-display text-2xl font-bold mb-4">Download My Resume</h3>
+          <p class="text-gray-400 mb-8 max-w-lg mx-auto">Get a comprehensive overview of my experience, skills, and
+            certifications in PDF format.</p>
+          <a href="#"
+            class="magnetic-btn inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider hover:scale-105 transition-transform duration-300"><i
+              class="fas fa-download"></i> DOWNLOAD CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="relative py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-title mb-4">CONNECT</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-blue mx-auto rounded-full"></div>
+      </div>
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-magenta rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000">
+        </div>
+        <div class="relative rounded-3xl bg-neon-card backdrop-blur-xl border border-white/10 p-8 md:p-12">
+          <form id="contact-form" class="space-y-6" enctype="multipart/form-data">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="name" class="block text-sm font-medium text-gray-300">Full Name</label>
+                <input type="text" id="name" name="name" required
+                  class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300"
+                  placeholder="John Doe" />
+                <span class="text-xs text-red-400 hidden" id="name-error">Please enter your name.</span>
+              </div>
+              <div class="space-y-2">
+                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                <input type="email" id="email" name="email" required
+                  class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300"
+                  placeholder="john@example.com" />
+                <span class="text-xs text-red-400 hidden" id="email-error">Please enter a valid email.</span>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="phone" class="block text-sm font-medium text-gray-300">Phone</label>
+                <input type="tel" id="phone" name="phone"
+                  class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300"
+                  placeholder="+1 (555) 000-0000" />
+                <span class="text-xs text-red-400 hidden" id="phone-error">Please enter a valid phone number.</span>
+              </div>
+              <div class="space-y-2">
+                <label for="subject" class="block text-sm font-medium text-gray-300">Subject</label>
+                <input type="text" id="subject" name="subject" required
+                  class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300"
+                  placeholder="Project Inquiry" />
+                <span class="text-xs text-red-400 hidden" id="subject-error">Please enter a subject.</span>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
+              <textarea id="message" name="message" rows="6" required
+                class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-gray-500 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue outline-none transition-all duration-300"
+                placeholder="Tell me about your project..."></textarea>
+              <span class="text-xs text-red-400 hidden" id="message-error">Please enter your message.</span>
+            </div>
+            <div class="space-y-2">
+              <label for="file-upload" class="block text-sm font-medium text-gray-300">Attachment (optional)</label>
+              <input type="file" id="file-upload" name="attachment"
+                class="w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-neon-blue/20 file:text-neon-blue hover:file:bg-neon-blue/30 transition-all" />
+            </div>
+            <button type="submit"
+              class="magnetic-btn w-full py-4 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold text-sm tracking-wider hover:opacity-90 transition-opacity">SEND
+              MESSAGE</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="relative py-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div
+          class="font-display text-2xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent">
+          DEV.PORTFOLIO</div>
+        <div class="flex gap-6">
+          <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-neon-blue transition-colors"><i
+              class="fab fa-github text-xl"></i></a>
+          <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-neon-blue transition-colors"><i
+              class="fab fa-linkedin text-xl"></i></a>
+          <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-neon-blue transition-colors"><i
+              class="fab fa-twitter text-xl"></i></a>
+          <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-neon-blue transition-colors"><i
+              class="fab fa-instagram text-xl"></i></a>
+          <a href="#" aria-label="Email" class="text-gray-400 hover:text-neon-blue transition-colors"><i
+              class="fas fa-envelope text-xl"></i></a>
+        </div>
+        <p class="text-gray-500 text-sm">&copy; 2025 Neon Portfolio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cookie-consent"
+    class="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-96 glass-card p-6 z-40 translate-y-full opacity-0">
+    <p class="text-sm text-gray-300 mb-4">This website uses cookies to ensure you get the best experience.</p>
+    <button id="cookie-accept"
+      class="w-full py-2 rounded-lg bg-neon-blue text-black font-bold text-sm hover:bg-neon-blue/80 transition-colors">Accept</button>
   </div>
-</footer>
 
-<div id="cookie-consent" class="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-96 glass-card p-6 z-40 translate-y-full opacity-0">
-  <p class="text-sm text-gray-300 mb-4">This website uses cookies to ensure you get the best experience.</p>
-  <button id="cookie-accept" class="w-full py-2 rounded-lg bg-neon-blue text-black font-bold text-sm hover:bg-neon-blue/80 transition-colors">Accept</button>
-</div>
-
-<button id="back-to-top" aria-label="Back to top" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-neon-card backdrop-blur-xl border border-white/10 flex items-center justify-center text-neon-blue hover:border-neon-blue transition-all duration-300 z-40 opacity-0 pointer-events-none"><i class="fas fa-arrow-up"></i></button>
+  <button id="back-to-top" aria-label="Back to top"
+    class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-neon-card backdrop-blur-xl border border-white/10 flex items-center justify-center text-neon-blue hover:border-neon-blue transition-all duration-300 z-40 opacity-0 pointer-events-none"><i
+      class="fas fa-arrow-up"></i></button>
 </body>
+
 </html>
