@@ -527,16 +527,31 @@ class Portfolio {
   initThemeToggle() {
     const toggle = document.getElementById('theme-toggle');
     if (!toggle) return;
+    const icon = toggle.querySelector('i');
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+    let savedTheme = 'dark';
+
+    try {
+      savedTheme = localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark';
+    } catch {}
+
+    const applyTheme = (theme) => {
+      const isLight = theme === 'light';
+      document.body.classList.toggle('theme-light', isLight);
+      document.documentElement.style.colorScheme = isLight ? 'light' : 'dark';
+      icon?.classList.toggle('fa-sun', !isLight);
+      icon?.classList.toggle('fa-moon', isLight);
+      toggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
+      themeColor?.setAttribute('content', isLight ? '#f4f7fb' : '#0a0a0f');
+    };
+
+    applyTheme(savedTheme);
     toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const icon = toggle.querySelector('i');
-      if (document.body.classList.contains('dark')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
+      const theme = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+      applyTheme(theme);
+      try {
+        localStorage.setItem('portfolio-theme', theme);
+      } catch {}
     });
   }
 
